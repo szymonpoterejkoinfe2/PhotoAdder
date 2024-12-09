@@ -11,6 +11,7 @@ PhotoAdder is desktop application which should be used to retrive images from th
 **Packages:** CloedXML, Newtonsoft.Json
 
 ## Application looks
+![PhotoAdderLooks](https://github.com/user-attachments/assets/4c96afd7-7284-4e92-b477-0d170502a4ef)
 
 ## Application setup
 In order to use the application some changes need to be performed on the *"ApiData.txt"* file. Field *ApiKey:* needs to be replaced with users own API key. The same should be done for the field *SearchEngineId:* wher it should be replaced with users Google Programmable Search Engine ID.
