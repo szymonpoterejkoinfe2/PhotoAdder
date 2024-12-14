@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "H:\\PhotoAdder\\PhotoAdder.csproj": {}
+    "H:\\GitHub\\PhotoAdder\\PhotoAdder.csproj": {}
   },
   "projects": {
-    "H:\\PhotoAdder\\PhotoAdder.csproj": {
+    "H:\\GitHub\\PhotoAdder\\PhotoAdder.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\PhotoAdder\\PhotoAdder.csproj",
+        "projectUniqueName": "H:\\GitHub\\PhotoAdder\\PhotoAdder.csproj",
         "projectName": "PhotoAdder",
-        "projectPath": "H:\\PhotoAdder\\PhotoAdder.csproj",
+        "projectPath": "H:\\GitHub\\PhotoAdder\\PhotoAdder.csproj",
         "packagesPath": "C:\\Users\\Szymon\\.nuget\\packages\\",
-        "outputPath": "H:\\PhotoAdder\\obj\\",
+        "outputPath": "H:\\GitHub\\PhotoAdder\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -47,6 +47,10 @@
             "ClosedXML": {
               "target": "Package",
               "version": "[0.104.2, )"
+            },
+            "HtmlAgilityPack": {
+              "target": "Package",
+              "version": "[1.11.71, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",

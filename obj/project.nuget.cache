@@ -1,14 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "xwgxxyBBdwwYh8eKzN/DdSq4ux9vg+TvkK3htr7BcnR0VNXFNJIhWgNA8mPOvK6bN464ionifc8puruL3hTOQw==",
+  "dgSpecHash": "Ziu8gzgMJz/zWEz94spV8q5eciZEOf39p4Te++4/uokAnTnIP/ZkL3vFKpjH4kfQm+vz5loSchyDhvmgnmG5Uw==",
   "success": true,
-  "projectFilePath": "H:\\PhotoAdder\\PhotoAdder.csproj",
+  "projectFilePath": "H:\\GitHub\\PhotoAdder\\PhotoAdder.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Szymon\\.nuget\\packages\\closedxml\\0.104.2\\closedxml.0.104.2.nupkg.sha512",
     "C:\\Users\\Szymon\\.nuget\\packages\\closedxml.parser\\1.2.0\\closedxml.parser.1.2.0.nupkg.sha512",
     "C:\\Users\\Szymon\\.nuget\\packages\\documentformat.openxml\\3.1.1\\documentformat.openxml.3.1.1.nupkg.sha512",
     "C:\\Users\\Szymon\\.nuget\\packages\\documentformat.openxml.framework\\3.1.1\\documentformat.openxml.framework.3.1.1.nupkg.sha512",
     "C:\\Users\\Szymon\\.nuget\\packages\\excelnumberformat\\1.1.0\\excelnumberformat.1.1.0.nupkg.sha512",
+    "C:\\Users\\Szymon\\.nuget\\packages\\htmlagilitypack\\1.11.71\\htmlagilitypack.1.11.71.nupkg.sha512",
     "C:\\Users\\Szymon\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\Szymon\\.nuget\\packages\\rbush\\4.0.0\\rbush.4.0.0.nupkg.sha512",
     "C:\\Users\\Szymon\\.nuget\\packages\\sixlabors.fonts\\1.0.0\\sixlabors.fonts.1.0.0.nupkg.sha512",
