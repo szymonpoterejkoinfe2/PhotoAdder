@@ -9,6 +9,7 @@
         xmlns:local="clr-namespace:PhotoAdder.View.Windows"
         xmlns:vm="clr-namespace:PhotoAdder.ViewModel.VMs"
         xmlns:conv="clr-namespace:PhotoAdder.ViewModel.ValueConverters"
+        xmlns:vRules="clr-namespace:PhotoAdder.ViewModel.Validators"
         mc:Ignorable="d"
         Title="MainWindow" Height="580" Width="400"
         WindowStyle="None"
@@ -130,14 +131,27 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Text="Worksheet:  " Foreground="#6b7280" FontSize="15" Grid.Row="1" Grid.Column="0"  Padding="0,4,0,0"/>
-                                <TextBox  Width="50" Height="40" Text="{Binding WorkSheet, Mode=TwoWay}" VerticalContentAlignment="Center" FontSize="15" Padding="2,0" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1">
+                                <TextBox Name="WorkSheetTextBox"  Width="50" Height="40"  VerticalContentAlignment="Center" FontSize="15" Padding="2,0" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" >
                                     <TextBox.Resources>
                                         <Style TargetType="{x:Type Border}">
                                             <Setter Property="CornerRadius" Value="5"/>
                                         </Style>
                                     </TextBox.Resources>
+                                    <TextBox.Text>
+                                        <Binding Path="WorkSheet" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
+                                            <Binding.ValidationRules>
+                                                <vRules:NumericValidationRule />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
                                 </TextBox>
 
+                                <!--Error message popup-->
+                                <Popup  PlacementTarget="{Binding ElementName=MyTextBox}"  Placement="Bottom" IsOpen="{Binding ElementName=WorkSheetTextBox, Path=(Validation.HasError), Mode=OneWay}">
+                                    <Border Background="LightGray" Padding="10" BorderBrush="Black" BorderThickness="1">
+                                        <TextBlock Text="{Binding ElementName=WorkSheetTextBox, Path=(Validation.Errors)[0].ErrorContent}" />
+                                    </Border>
+                                </Popup>
                             </Grid>
                             <!-- Phrase cell -->
                             <Grid Grid.Column="1" Margin="0,0,0,0">
@@ -153,14 +167,27 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Text="Phrase column:" Foreground="#6b7280" FontSize="15" Grid.Row="1" Grid.Column="1" Padding="0,4,0,0" Margin="0,0,5,0"/>
-                                <TextBox  Width="50" Height="40" Text="{Binding PhraseCell, Mode=TwoWay}" VerticalContentAlignment="Center" FontSize="15" Padding="2,0,0,0" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2">
+                                <TextBox Name="PhraseColumnTextBox" Width="50" Height="40" VerticalContentAlignment="Center" FontSize="15" Padding="2,0,0,0" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2">
                                     <TextBox.Resources>
                                         <Style TargetType="{x:Type Border}">
                                             <Setter Property="CornerRadius" Value="5"/>
                                         </Style>
                                     </TextBox.Resources>
+                                    <TextBox.Text>
+                                        <Binding Path="PhraseCell" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
+                                            <Binding.ValidationRules>
+                                                <vRules:NumericValidationRule />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
                                 </TextBox>
 
+                                <!--Error message popup-->
+                                <Popup  PlacementTarget="{Binding ElementName=PhraseColumnTextBox}"  Placement="Bottom" IsOpen="{Binding ElementName=PhraseColumnTextBox, Path=(Validation.HasError), Mode=OneWay}">
+                                    <Border Background="LightGray" Padding="10" BorderBrush="Black" BorderThickness="1">
+                                        <TextBlock Text="{Binding ElementName=PhraseColumnTextBox, Path=(Validation.Errors)[0].ErrorContent}" />
+                                    </Border>
+                                </Popup>
                             </Grid>
 
                         </Grid>
@@ -186,14 +213,28 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Text="Image column:  " Foreground="#6b7280" FontSize="15" Grid.Row="1" Grid.Column="0"  Padding="0,4,0,0"/>
-                                <TextBox  Width="50" Height="40" Text="{Binding ImageCell, Mode=TwoWay}" VerticalContentAlignment="Center" FontSize="15" Padding="2,0" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1">
+                                <TextBox Name="ImageColumnTextBox"  Width="50" Height="40" VerticalContentAlignment="Center" FontSize="15" Padding="2,0" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1">
                                     <TextBox.Resources>
                                         <Style TargetType="{x:Type Border}">
                                             <Setter Property="CornerRadius" Value="5"/>
                                         </Style>
                                     </TextBox.Resources>
-                                </TextBox>
 
+                                    <TextBox.Text>
+                                        <Binding Path="ImageCell" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
+                                            <Binding.ValidationRules>
+                                                <vRules:NumericValidationRule />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                
+                                <!--Error message popup-->
+                                <Popup  PlacementTarget="{Binding ElementName=ImageColumnTextBox}"  Placement="Bottom" IsOpen="{Binding ElementName=ImageColumnTextBox, Path=(Validation.HasError), Mode=OneWay}">
+                                    <Border Background="LightGray" Padding="10" BorderBrush="Black" BorderThickness="1">
+                                        <TextBlock Text="{Binding ElementName=ImageColumnTextBox, Path=(Validation.Errors)[0].ErrorContent}" />
+                                    </Border>
+                                </Popup>
                             </Grid>
                             
                             <!-- Starting Row -->
@@ -210,16 +251,27 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Text="Starting Row:  " Foreground="#6b7280" FontSize="15" Grid.Row="1" Grid.Column="1"  Padding="0,4,0,0"/>
-                                <TextBox  Width="50" Height="40" Text="{Binding RowBegin, Mode=TwoWay}" VerticalContentAlignment="Center" FontSize="15" Padding="2,0,0,0" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2">
+                                <TextBox Name="StartingRowTextBox"  Width="50" Height="40" VerticalContentAlignment="Center" FontSize="15" Padding="2,0,0,0" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2">
                                     <TextBox.Resources>
                                         <Style TargetType="{x:Type Border}">
                                             <Setter Property="CornerRadius" Value="5"/>
                                         </Style>
                                     </TextBox.Resources>
+                                    <TextBox.Text>
+                                        <Binding Path="RowBegin" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
+                                            <Binding.ValidationRules>
+                                                <vRules:NumericValidationRule />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
                                 </TextBox>
 
-
-
+                                <!--Error message popup-->
+                                <Popup  PlacementTarget="{Binding ElementName=StartingRowTextBox}"  Placement="Bottom" IsOpen="{Binding ElementName=StartingRowTextBox, Path=(Validation.HasError), Mode=OneWay}">
+                                    <Border Background="LightGray" Padding="10" BorderBrush="Black" BorderThickness="1">
+                                        <TextBlock Text="{Binding ElementName=StartingRowTextBox, Path=(Validation.Errors)[0].ErrorContent}" />
+                                    </Border>
+                                </Popup>
                             </Grid>
 
                         </Grid>
@@ -252,13 +304,27 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Text="Ending Row:" Foreground="#6b7280" FontSize="15" Grid.Row="1" Grid.Column="1" Padding="0,4,0,0"/>
-                                <TextBox  Width="50" Height="40" Text="{Binding RowEnd, Mode=TwoWay}" VerticalContentAlignment="Center" FontSize="15" Padding="2,0,0,0" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2">
+                                <TextBox Name="RowEndTextBox" Width="50" Height="40" VerticalContentAlignment="Center" FontSize="15" Padding="2,0,0,0" Grid.Row="0" Grid.RowSpan="3" Grid.Column="2">
                                     <TextBox.Resources>
                                         <Style TargetType="{x:Type Border}">
                                             <Setter Property="CornerRadius" Value="5"/>
                                         </Style>
                                     </TextBox.Resources>
+                                    <TextBox.Text>
+                                        <Binding Path="RowEnd" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" >
+                                            <Binding.ValidationRules>
+                                                <vRules:NumericValidationRule />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
                                 </TextBox>
+
+                                <!--Error message popup-->
+                                <Popup  PlacementTarget="{Binding ElementName=RowEndTextBox}"  Placement="Bottom" IsOpen="{Binding ElementName=RowEndTextBox, Path=(Validation.HasError), Mode=OneWay}">
+                                    <Border Background="LightGray" Padding="10" BorderBrush="Black" BorderThickness="1">
+                                        <TextBlock Text="{Binding ElementName=RowEndTextBox, Path=(Validation.Errors)[0].ErrorContent}" />
+                                    </Border>
+                                </Popup>
 
                             </Grid>
 
