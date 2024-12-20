@@ -7,11 +7,17 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="View\CustomControls\ToggleButton.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\Windows\MainWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="View\CustomControls\ToggleButton.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\Windows\MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>

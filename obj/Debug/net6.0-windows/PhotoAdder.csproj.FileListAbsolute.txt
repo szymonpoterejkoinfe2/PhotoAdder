@@ -101,3 +101,5 @@ H:\Git\PhotoAdder\obj\Debug\net6.0-windows\refint\PhotoAdder.dll
 H:\Git\PhotoAdder\obj\Debug\net6.0-windows\PhotoAdder.pdb
 H:\Git\PhotoAdder\obj\Debug\net6.0-windows\PhotoAdder.genruntimeconfig.cache
 H:\Git\PhotoAdder\obj\Debug\net6.0-windows\ref\PhotoAdder.dll
+H:\Git\PhotoAdder\obj\Debug\net6.0-windows\View\CustomControls\ToggleButton.g.cs
+H:\Git\PhotoAdder\obj\Debug\net6.0-windows\View\CustomControls\ToggleButton.baml
