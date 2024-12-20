@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-H:\GitHub\PhotoAdder\obj\Debug\net6.0-windows\
+H:\Git\PhotoAdder\obj\Debug\net6.0-windows\
 PhotoAdder
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-H:\GitHub\PhotoAdder\App.xaml
+H:\Git\PhotoAdder\App.xaml
 1-1902571720
 1-1606303973
-18395745241
-211416264306
+201019090671
+212-1346247207
 View\Windows\MainWindow.xaml;
 
 False

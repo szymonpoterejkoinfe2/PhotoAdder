@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Ziu8gzgMJz/zWEz94spV8q5eciZEOf39p4Te++4/uokAnTnIP/ZkL3vFKpjH4kfQm+vz5loSchyDhvmgnmG5Uw==",
+  "dgSpecHash": "IEGI1BXb4xib1uVDZPCItN7KWcqJRPpPel2sosrfW/SwBUrQnvay6rH4LzBfE7ZpLEpzl7IZb1bpR1FbEeD7MA==",
   "success": true,
-  "projectFilePath": "H:\\GitHub\\PhotoAdder\\PhotoAdder.csproj",
+  "projectFilePath": "H:\\Git\\PhotoAdder\\PhotoAdder.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Szymon\\.nuget\\packages\\closedxml\\0.104.2\\closedxml.0.104.2.nupkg.sha512",
     "C:\\Users\\Szymon\\.nuget\\packages\\closedxml.parser\\1.2.0\\closedxml.parser.1.2.0.nupkg.sha512",
