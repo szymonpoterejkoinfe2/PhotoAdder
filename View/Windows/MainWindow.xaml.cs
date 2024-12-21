@@ -30,5 +30,6 @@ namespace PhotoAdder.View.Windows
         {
             DragMove();
         }
+
     }
 }

@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PhotoAdder.View.CustomControls"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="200">
+             d:DesignHeight="50" d:DesignWidth="200"
+             Name="ToggleButtonControl">
 
     <UserControl.Resources>
 
@@ -20,57 +21,55 @@
             <Setter Property="Width" Value="55"/>
             <Setter Property="MaxHeight" Value="25"/>
             <Setter Property="MaxWidth" Value="65"/>
+
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ToggleButton}">
                         <Grid>
-                            <Border Name="Border"
-                                    Background="{TemplateBinding Background}"
-                                    CornerRadius="15"
-                                    Height="{TemplateBinding Height}"
-                                    Width="{TemplateBinding Width}"
-                                    VerticalAlignment="Center"
-                                    HorizontalAlignment="Center">
+                            <!-- Toggle Background -->
+                            <Border x:Name="Border"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="15"
+                        Height="{TemplateBinding Height}"
+                        Width="{TemplateBinding Width}"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center">
                             </Border>
-                            <Ellipse x:Name="Ellipse" Fill="White" Height="25" Width="25" VerticalAlignment="Center" HorizontalAlignment="Left" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="3"/>
+
+                            <!-- Toggle Ellipse -->
+                            <Ellipse x:Name="Ellipse"
+                         Fill="White"
+                         Height="25"
+                         Width="25"
+                         VerticalAlignment="Center"
+                         HorizontalAlignment="Left"
+                         Stroke="{TemplateBinding BorderBrush}"
+                         StrokeThickness="3"
+                         />
                         </Grid>
+
+                        <!-- Triggers -->
                         <ControlTemplate.Triggers>
-
-                            <!--EventTrigger Checked-->
-                            <EventTrigger RoutedEvent="Checked">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ThicknessAnimation Storyboard.TargetName="Ellipse"
-                                                            Storyboard.TargetProperty="Margin"
-                                                            To="30 0 0 0"
-                                                            Duration="0:0:0.2"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-
-                            <!--EventTrigger UnChecked-->
-                            <EventTrigger RoutedEvent="Unchecked">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <ThicknessAnimation Storyboard.TargetName="Ellipse"
-                                 Storyboard.TargetProperty="Margin"
-                                 To="0 0 0 0"
-                                 Duration="0:0:0.2"/>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-
+                            <!-- Trigger for Checked -->
                             <Trigger Property="IsChecked" Value="True">
-
-                                <Setter TargetName="Ellipse" Property="Fill" Value="{StaticResource BorderBrushColor}"/>
-                                <Setter TargetName="Ellipse" Property="Stroke" Value="White"/>
+                                <!-- Visual changes -->
+                                <Setter TargetName="Ellipse" Property="Fill" Value="{StaticResource BorderBrushColor}" />
+                                <Setter TargetName="Ellipse" Property="Stroke" Value="White" />
+                                <Setter TargetName="Ellipse" Property="Margin"  Value="30,0,0,0" />
                             </Trigger>
 
+                            <!-- Trigger for Unchecked -->
+                            <Trigger Property="IsChecked" Value="False">
+                                <!-- Visual changes -->
+                                <Setter TargetName="Ellipse" Property="Stroke" Value="{StaticResource BorderBrushColor}" />
+                                <Setter TargetName="Ellipse" Property="Fill" Value="White" />
+                                <Setter TargetName="Ellipse" Property="Margin"  Value="0,0,0,0" />
+                            </Trigger>
                         </ControlTemplate.Triggers>
+
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            
         </Style>
         <!--End - ToggleButtonStyle-->
   
@@ -84,9 +83,9 @@
         </Grid.ColumnDefinitions>
 
 
-        <Label Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Name="Option_one_name" Content="Option 1"/>
-        <CheckBox Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{DynamicResource ToggleButtonStyle}" />
-        <Label Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Name="Option_two_name" Content="Option 2"/>
+        <Label Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Name="Option_one_name" Foreground="#6b7280" Content="{Binding LeftLabel, ElementName=ToggleButtonControl}"/>
+        <CheckBox Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{DynamicResource ToggleButtonStyle}" IsChecked="{Binding IsOn, ElementName=ToggleButtonControl}"/>
+        <Label Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Name="Option_two_name" Foreground="#6b7280" Content="{Binding RightLabel, ElementName=ToggleButtonControl}"/>
         
     </Grid>
 </UserControl>
