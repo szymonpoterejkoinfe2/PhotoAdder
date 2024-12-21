@@ -1,8 +1,11 @@
 # PhotoAdder
-C# application, utilizing Google Programmable Search Engine and Google Search API for search, download and addition to excel file of image related recived to phrase. 
+C# application, utilizing Google Programmable Search Engine and Google Search API or Web scraping for search, download and addition to excel file of image related to recived phrase. 
 
 # Detailed Description
-**PhotoAdder** is a desktop application designed to retrieve images from the internet and insert them into a user-specified column in a provided Excel file. 
+**PhotoAdder** is a Desktop application in C# with WPF interface enables searching and organizing photos. It uses Google Programmable Search Engine and Google
+Search API for precise searches, allowing to download images and
+save them in Excel file. Additionally, it offers web scraping, enabling to
+search photos from the Internet, which increases flexibility and versatility.
 
 ## How It Works
 1. **Phrase Extraction**:  
@@ -33,7 +36,7 @@ This tool simplifies the process of automating image insertion into Excel files 
 **Packages:** CloedXML, Newtonsoft.Json
 
 ## Application looks
-![PhotoAdderLooks](https://github.com/user-attachments/assets/4c96afd7-7284-4e92-b477-0d170502a4ef)
+![PhotoAdderLooks](https://github.com/user-attachments/assets/bac38d97-73ef-4310-a92c-0afb2b982031)
 
 # Application Setup
 To use the application, some modifications need to be made to the **`ApiData.txt`** file:
