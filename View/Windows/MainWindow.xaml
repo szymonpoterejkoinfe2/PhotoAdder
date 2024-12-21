@@ -12,7 +12,7 @@
         xmlns:vRules="clr-namespace:PhotoAdder.ViewModel.Validators"
         xmlns:controls="clr-namespace:PhotoAdder.View.CustomControls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="580" Width="400"
+        Title="MainWindow" Height="680" Width="400"
         WindowStyle="None"
         BorderThickness="0"
         Background="Transparent"
@@ -65,6 +65,7 @@
                 </Grid>
                 <!-- Separator -->
                 <Rectangle Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="1" Width="360" Fill="Black" Margin="0,30,0,0"/>
+   
                 <!-- Main controls -->
                 <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
                     <StackPanel>
@@ -110,7 +111,13 @@
                                 </Button>
                             </StackPanel>
                         </StackPanel>
-                        
+
+                        <!-- Separator Top-->
+                        <Rectangle Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="1" Width="360" Fill="Black" Margin="0,15,0,0"/>
+                        <Label Content="Excel file settings"/>
+                        <!-- Separator Bottom-->
+                        <Rectangle Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="1" Width="360" Fill="Black" Margin="0,0,0,0"/>
+
                         <!-- Grid for phrase cell and WorkSheet -->
                         <Grid Margin="0,15,0,0" >
                             <Grid.ColumnDefinitions>
@@ -277,12 +284,18 @@
 
                         </Grid>
 
+                        <!-- Separator Start-->
+                        <Rectangle Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="1" Width="360" Fill="Black" Margin="0,15,0,0"/>
+                        <Label Content="Extractor settings" />
+                        <!-- Separator End-->
+                        <Rectangle Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="1" Width="360" Fill="Black" Margin="0,0,0,0"/>
+
                         <!-- Image extractor selector -->
-                        <Grid Margin="0,25,0,15">
-                            <controls:ToggleButton x:Name="Image_Extractor_selector" FontSize="15"/>
+                        <Grid Margin="0,20,0,15">
+                            <controls:ToggleButton x:Name="Image_Extractor_selector" FontSize="15" LeftLabel="Scraper Extractor" RightLabel="API Extractor" IsOn="{Binding ApiExtractor, Mode=TwoWay}" />
                         </Grid>
                         <!-- Grid for limiting requests and setting ending row-->
-                        <Grid>
+                        <Grid Margin="5,0,5,0" Visibility="{Binding ApiExtractor, Converter={StaticResource visibilityConverter}}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>

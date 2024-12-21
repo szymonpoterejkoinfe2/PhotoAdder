@@ -47,6 +47,8 @@ namespace PhotoAdder.ViewModel.VMs
         private int maxProgressValue;
         private bool buttonEnable;
         private bool progressBarVis;
+        private bool apiExtractor;
+        private bool limitVisible;
 
         //Public
         public string SaveFolderPath
@@ -159,6 +161,15 @@ namespace PhotoAdder.ViewModel.VMs
                 OnPropertyChanged(nameof(ProgressBarVis));
             }
         }
+        public bool ApiExtractor
+        {
+            get { return apiExtractor; }
+            set { 
+                apiExtractor = value;
+                OnPropertyChanged(nameof(ApiExtractor));
+                SetLimitRequests(apiExtractor);
+            }
+        }
         #endregion
 
         private ExcelFileData excelFileData = new ExcelFileData();
@@ -184,6 +195,8 @@ namespace PhotoAdder.ViewModel.VMs
             MaxProgressValue = 100;
             ButtonEnable = true;
             ProgressBarVis = false;
+            ApiExtractor = true;
+
         }
 
         #region Buttons_Conrtol_Function
@@ -240,8 +253,6 @@ namespace PhotoAdder.ViewModel.VMs
                 ButtonEnable = false;
                 ProgressBarVis = true;
 
-                //isExcelFileSelected = false;
-                //isFolderSelected = false;
 
                 ExcelReaderHelper excelReaderHelper = new ExcelReaderHelper
                 {
@@ -258,7 +269,16 @@ namespace PhotoAdder.ViewModel.VMs
                 {
                     MaxProgressValue = excelFileData.RowCount;
 
-                    imageURLsToDownload = await GetImageURLsAsync(excelFileData.RowsData);
+
+
+                    if (ApiExtractor)
+                    {
+                        imageURLsToDownload = await GetImageURLsAsyncAPI(excelFileData.RowsData);
+                    }
+                    else {
+
+                        imageURLsToDownload = await GetImageURLsAsyncScraper(excelFileData.RowsData);
+                    }
                 }
 
                 if (imageURLsToDownload.Count > 0)
@@ -283,8 +303,9 @@ namespace PhotoAdder.ViewModel.VMs
         }
         #endregion
 
-        // Geting images URLs uding Google custom search API
-        private async Task<List<string>> GetImageURLsAsync(List<RowData> excelFileData)
+        #region URL_Get_Functions
+        // Geting images URLs using Google custom search API
+        private async Task<List<string>> GetImageURLsAsyncAPI(List<RowData> excelFileData)
         {
             List<string> imageURLs = new List<string>();
             GoogleAPIHelper googleAPIHelper = new GoogleAPIHelper();
@@ -298,6 +319,23 @@ namespace PhotoAdder.ViewModel.VMs
 
             return imageURLs;
         }
+        // Geting images URLs using Web Scraping
+        private async Task<List<string>> GetImageURLsAsyncScraper(List<RowData> excelFileData)
+        {
+
+            List<string> imageURLs = new List<string>();
+            WebScraperHelper webScraperHelper = new WebScraperHelper();
+
+            // Get URL for every cell phrase 
+            foreach (RowData excelRow in excelFileData)
+            {
+                string url = await webScraperHelper.GetImageURLAsync(excelRow.RowPhrase);
+                imageURLs.Add(url);
+            }
+
+            return imageURLs;
+        }
+        #endregion
 
         private async Task AddImagesToExcel(List<RowData> fileData, List<string> imageURLs)
         {
@@ -329,6 +367,19 @@ namespace PhotoAdder.ViewModel.VMs
             }
 
         }
+
+        private void SetLimitRequests(bool apiExtractor)
+        {
+            if (!apiExtractor)
+            {
+                LimitRequests = false;
+            }
+            else
+            {
+                LimitRequests = true;
+            }
+        }
+
 
         #region On_Property_Changed
         private void OnPropertyChanged(string propertyName)
