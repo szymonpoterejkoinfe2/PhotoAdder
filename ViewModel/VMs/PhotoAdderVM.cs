@@ -2,6 +2,7 @@
 using PhotoAdder.Model.Classes;
 using PhotoAdder.ViewModel.Commands;
 using PhotoAdder.ViewModel.Helpers;
+using PhotoAdder.ViewModel.Helpers.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -263,13 +264,27 @@ namespace PhotoAdder.ViewModel.VMs
                     PhraseCellNumber = phraseCell // Numer kolumny, która zawiera frazy do pobrania
                 };
 
-                excelFileData = await excelReaderHelper.ReadFileAsync(limitRequests); //Pobranie wszystkich faraz z pliku excel
+                try
+                {
+                    excelFileData = await excelReaderHelper.ReadFileAsync(limitRequests); //Pobranie wszystkich faraz z pliku excel
+                }
+                catch (NegativeNumberException ex)
+                {
+                    // To do: error messageBox displayer
+                }
+                catch (ExcelWorksheetNotExistException ex)
+                {
+                    // To do: error messageBox displayer
+                }
+                catch (ExcelFileNotExistsException ex)
+                {
+                    // To do: error messageBox displayer
+                }
+
 
                 if (excelFileData.RowCount > 0)
                 {
                     MaxProgressValue = excelFileData.RowCount;
-
-
 
                     if (ApiExtractor)
                     {

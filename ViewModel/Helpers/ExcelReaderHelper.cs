@@ -1,7 +1,9 @@
 ﻿using ClosedXML.Excel;
 using PhotoAdder.Model.Classes;
+using PhotoAdder.ViewModel.Helpers.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,63 +65,143 @@ namespace PhotoAdder.ViewModel.Helpers
         private async Task<ExcelFileData> ExtractDataNoLimitAsync(string pathToFile, int workSheetNumber, int phraseCellNumber, int startRow)
         {
             ExcelFileData excelFileData = new ExcelFileData();
-            
-            await Task.Run(() =>
+
+            if (CheckForNegativeNumbers(workSheetNumber, phraseCellNumber, startRow) != null)
             {
-                using (var workbook = new XLWorkbook(pathToFile))
+                throw new NegativeNumberException(CheckForNegativeNumbers(workSheetNumber, phraseCellNumber, startRow));
+            }
+
+            if (!File.Exists(pathToFile))
+            {
+                throw new ExcelFileNotExistsException(pathToFile);
+            }
+            await Task.Run(() =>
                 {
-                    var worksheet = workbook.Worksheet(workSheetNumber);
-                    excelFileData.RowCount = 0;
-
-                    var endRow = worksheet.RowsUsed().Count();
-
-                    for (int rowNumber = startRow; rowNumber <= endRow; rowNumber++)
+                    using (var workbook = new XLWorkbook(pathToFile))
                     {
-                        var row = worksheet.Row(rowNumber);
-
-                        if (!string.IsNullOrEmpty(row.Cell(phraseCellNumber).GetString()))
+                        if (WorksheetExists(workbook.Worksheets.Count, workSheetNumber))
                         {
-                            RowData rowData = new RowData();
-                            rowData.RowNumber = row.RowNumber();
-                            rowData.RowPhrase = row.Cell(phraseCellNumber).GetString();
+                            var worksheet = workbook.Worksheet(workSheetNumber);
 
-                            excelFileData.RowsData.Add(rowData);
-                            excelFileData.RowCount++;
+                            excelFileData = GetAllRows(worksheet, startRow, worksheet.RowsUsed().Count());
                         }
-                    }
-                }
-            });
+                        else 
+                        {
+                            throw new ExcelWorksheetNotExistException(workSheetNumber);
+                        }
 
+                    }
+                });
+            
             return excelFileData;
         }
         // Reading every occupied cell from range specyfied by the user
         private async Task<ExcelFileData> ExtractDataLimitAsync(string pathToFile, int workSheetNumber, int phraseCellNumber, int startRow, int endRow)
         {
             ExcelFileData excelFileData = new ExcelFileData();
-            await Task.Run(() =>
+
+            if (CheckForNegativeNumbers(workSheetNumber, phraseCellNumber, startRow, endRow) != null)
             {
-                using (var workbook = new XLWorkbook(pathToFile))
+                throw new NegativeNumberException(CheckForNegativeNumbers(workSheetNumber, phraseCellNumber, startRow, endRow));
+            }
+
+            if (!File.Exists(pathToFile) )
+            {
+                throw new ExcelFileNotExistsException(pathToFile);
+            }
+
+            if (endRow < startRow)
+            {
+                throw new EndRowLowerException();
+            }
+
+            await Task.Run(() =>
                 {
-                    var worksheet = workbook.Worksheet(workSheetNumber);
-                    excelFileData.RowCount = 0;
-
-                    for (int rowNumber = startRow; rowNumber <= endRow; rowNumber++)
+                    using (var workbook = new XLWorkbook(pathToFile))
                     {
-                        var row = worksheet.Row(rowNumber);
-
-                        if (!string.IsNullOrEmpty(row.Cell(phraseCellNumber).GetString()))
+                        if (WorksheetExists(workbook.Worksheets.Count, workSheetNumber))
                         {
-                            RowData rowData = new RowData();
-                            rowData.RowNumber = row.RowNumber();
-                            rowData.RowPhrase = row.Cell(phraseCellNumber).GetString();
-
-                            excelFileData.RowsData.Add(rowData);
-                            excelFileData.RowCount++;
+                            var worksheet = workbook.Worksheet(workSheetNumber);
+                            
+                            excelFileData = GetAllRows(worksheet, startRow, endRow);
                         }
-                    }  
-                }
-            });
+                        else { 
+                            throw new ExcelWorksheetNotExistException(workSheetNumber);
+                        }
+                    }
+                });
+            
             return excelFileData;
+        }
+
+        private ExcelFileData GetAllRows(IXLWorksheet worksheet, int startRow, int endRow) {
+
+            ExcelFileData excelFileData = new ExcelFileData();
+
+            excelFileData.RowCount = 0;
+
+            for (int rowNumber = startRow; rowNumber <= endRow; rowNumber++)
+            {
+                var row = worksheet.Row(rowNumber);
+
+                if (!string.IsNullOrEmpty(row.Cell(phraseCellNumber).GetString()))
+                {
+                    RowData rowData = new RowData();
+                    rowData.RowNumber = row.RowNumber();
+                    rowData.RowPhrase = row.Cell(phraseCellNumber).GetString();
+
+                    excelFileData.RowsData.Add(rowData);
+                    excelFileData.RowCount++;
+                }
+            }
+
+            return excelFileData;
+        }
+
+        private int? CheckForNegativeNumbers(int workSheetNumber, int phraseCellNumber, int startRow)
+        {
+            if (workSheetNumber < 0)
+            {
+                return workSheetNumber;
+            }
+            else if (phraseCellNumber < 0)
+            {
+                return phraseCellNumber;
+            }
+            else if (startRow < 0)
+            {
+                return startRow;
+            }
+
+
+            return null;
+        }
+
+        private int? CheckForNegativeNumbers(int workSheetNumber, int phraseCellNumber, int startRow, int endRow)
+        {
+            if (workSheetNumber < 0)
+            {
+                return workSheetNumber;
+            }
+            else if (phraseCellNumber < 0)
+            {
+                return phraseCellNumber;
+            }
+            else if (startRow < 0)
+            {
+                return startRow;
+            }
+            else if (endRow < 0)
+            {
+                return endRow;
+            }
+
+            return null;
+        }
+
+        private bool WorksheetExists(int worksheetsCount, int worksheetNumber)
+        {
+            return (worksheetNumber <= worksheetsCount);
         }
     }
 }
