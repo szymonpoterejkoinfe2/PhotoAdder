@@ -1,5 +1,5 @@
 # PhotoAdder
-C# application, utilizing Google Programmable Search Engine and Google Search API or Web scraping for search, download and addition to excel file of image related to recived phrase. 
+C# application, utilizing Google Programmable Search Engine and Google Search API or Web scraping for search, download and addition to excel file of image related to received  phrase. 
 
 # Detailed Description
 **PhotoAdder** is a Desktop application in C# with WPF interface enables searching and organizing photos. It uses Google Programmable Search Engine and Google
