@@ -1,5 +1,7 @@
 ﻿using PhotoAdder.Model.Classes;
+using PhotoAdder.ViewModel.Helpers.Exceptions;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,14 +14,24 @@ namespace PhotoAdder.ViewModel.Helpers
 {
     public class ImageDownloadHelper
     {
-        public string _SavePath { get; set; } = AppData.OutputFolder;
+        public string? _SaveDirectory { get; set; } = AppData.OutputFolder;
 
-        public async Task DownloadImageAsync(string imageUrl)
-        {          
+        public async Task DownloadImageAsync(string? imageUrl)
+        {
+            if (!Directory.Exists(_SaveDirectory))
+            {
+                throw new SaveFolderNotExistException(_SaveDirectory);
+            }
+
+            if (string.IsNullOrEmpty(imageUrl))
+            {
+                throw new NullOrEmptyImageUrlException();
+            }
+
             using (HttpClient client = new HttpClient())
             {
-                try
-                {
+                    string imageSavePath = _SaveDirectory + "\\CellPhotoToAdd.jpg";
+
                     // Send HTTP request to download the image
                     HttpResponseMessage imageResponse = await client.GetAsync(imageUrl);
 
@@ -30,17 +42,13 @@ namespace PhotoAdder.ViewModel.Helpers
                         byte[] imageBytes = await imageResponse.Content.ReadAsByteArrayAsync();
 
                         // Save the image to a file
-                        await File.WriteAllBytesAsync(_SavePath, imageBytes);
+                        await File.WriteAllBytesAsync(imageSavePath, imageBytes);
                     }
                     else
                     {
-                        MessageBox.Show("Failed to download image.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        throw new ImageDownloadFailureException(imageUrl);
                     }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error downloading image: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+
             }
         }
     }
