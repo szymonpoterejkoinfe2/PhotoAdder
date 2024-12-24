@@ -354,19 +354,17 @@ namespace PhotoAdder.ViewModel.VMs
 
         private async Task AddImagesToExcel(List<RowData> fileData, List<string> imageURLs)
         {
-            string savePath = AppData.OutputFolder + "\\CellPhotoToAdd.jpg";
-
-            ImageDownloadHelper imageDownloadHelper = new ImageDownloadHelper
-            {
-                _SavePath = savePath
-            };
+           
+            ImageDownloadHelper imageDownloadHelper = new ImageDownloadHelper();
 
             int rowCounter = rowBegin;
 
             foreach (string imageUrl in imageURLs)
             {
                 if (!string.IsNullOrEmpty(imageUrl))
-                {               
+                {
+                    string savePath = AppData.OutputFolder + "\\CellPhotoToAdd.jpg";
+
                     await imageDownloadHelper.DownloadImageAsync(imageUrl);
 
                     ExcelImageAdderHelper excelImageAdderHelper = new ExcelImageAdderHelper
