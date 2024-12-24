@@ -3,6 +3,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
+using PhotoAdder.ViewModel.Helpers.Exceptions;
+
 namespace PhotoAdder.ViewModel.Helpers
 {
     public class WebScraperHelper
@@ -11,7 +13,7 @@ namespace PhotoAdder.ViewModel.Helpers
 
         public async Task<string> GetImageURLAsync(string phrase)
         {
-            string imgURL;
+            string? imgURL;
             string encodedQuery = Uri.EscapeDataString(phrase);
             string url = googleURL + encodedQuery;
 
@@ -20,16 +22,23 @@ namespace PhotoAdder.ViewModel.Helpers
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(htmlContent);
 
-            var imageDiv = document.DocumentNode.Descendants("img").FirstOrDefault(node => node.OuterHtml.Contains("DS1iW")).OuterHtml;
+            string? imageDiv = document.DocumentNode.Descendants("img").FirstOrDefault(node => node.OuterHtml.Contains("DS1iW"))?.OuterHtml;
 
             if (imageDiv != null)
             {
                 imgURL = ExtractImageURL(imageDiv);
 
-                return imgURL;
+                if (imgURL != null)
+                {
+                    return imgURL;
+                }
+
+                throw new UrlExtractionException();
+            }
+            else {
+                throw new ImageForPhraseNotExistException(encodedQuery);
             }
 
-            return null;
         }
 
         private static async Task<string> GetPageHTMLAsync(string fullUrl)
@@ -46,12 +55,11 @@ namespace PhotoAdder.ViewModel.Helpers
 
             // Find the <img> node and extract the src attribute
             var imgNode = htmlDoc.DocumentNode.SelectSingleNode("//img");
-            if (imgNode != null)
-            {
-                return imgNode.GetAttributeValue("src", "");
-            }
-
-            return null;
+            
+            
+            return imgNode.GetAttributeValue("src", "");
+            
+            
         }
 
     }
