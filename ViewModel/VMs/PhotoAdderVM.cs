@@ -1,5 +1,6 @@
 ﻿using DocumentFormat.OpenXml.Wordprocessing;
 using PhotoAdder.Model.Classes;
+using PhotoAdder.View.MessageBox;
 using PhotoAdder.ViewModel.Commands;
 using PhotoAdder.ViewModel.Helpers;
 using PhotoAdder.ViewModel.Helpers.Exceptions;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Forms;
+
 
 // Code written by Szymon Poterejko.
 // All rights reserved ®.
@@ -42,7 +44,7 @@ namespace PhotoAdder.ViewModel.VMs
         private int rowBegin;
         private int rowEnd;
         private int progressValue;
-        private int phraseCell;
+        private int phraseColumnNumber;
         private int workSheet;
         private int imageCell;
         private int maxProgressValue;
@@ -111,10 +113,10 @@ namespace PhotoAdder.ViewModel.VMs
         }
         public int PhraseCell
         {
-            get { return phraseCell; }
+            get { return phraseColumnNumber; }
             set
             {
-                phraseCell = value;
+                phraseColumnNumber = value;
                 OnPropertyChanged(nameof(PhraseCell));
             }
         }
@@ -175,6 +177,8 @@ namespace PhotoAdder.ViewModel.VMs
 
         private ExcelFileData excelFileData = new ExcelFileData();
         private List<string> imageURLsToDownload = new List<string>();
+        private MessageBoxDisplayer messageBoxDisplayer = new MessageBoxDisplayer();
+
 
         public PhotoAdderVM()
         {
@@ -257,11 +261,11 @@ namespace PhotoAdder.ViewModel.VMs
 
                 ExcelReaderHelper excelReaderHelper = new ExcelReaderHelper
                 {
-                    ExcelFilePath = AppData.ExcelFile, //Ścieżka dostępu do pliku Excel
-                    StartRow = rowBegin, // Rząd komurek od którego zaczynamy pracę, naprzykład 1,2,3...
-                    EndRow = rowEnd,    // Rząd komurek na którym wykonamy operacje jako ostatnią.
-                    WorkSheetNumber = workSheet, // Numer arkusza z którego pobieramy dane
-                    PhraseCellNumber = phraseCell // Numer kolumny, która zawiera frazy do pobrania
+                    ExcelFilePath = AppData.ExcelFile, // Path to the Excel file  
+                    StartRow = rowBegin, // Row number from which we start working, for example, 1, 2, 3...  
+                    EndRow = rowEnd,    // Row number where we will perform the last operation.  
+                    WorkSheetNumber = workSheet, // Sheet number from which we retrieve the data  
+                    PhraseColumnNumber = phraseColumnNumber // Column number that contains the phrases to retrieve
                 };
 
                 try
@@ -270,15 +274,15 @@ namespace PhotoAdder.ViewModel.VMs
                 }
                 catch (NegativeNumberException ex)
                 {
-                    // To do: error messageBox displayer
+                    messageBoxDisplayer.ShowErrorBox("Negative number error", ex.Message);
                 }
                 catch (ExcelWorksheetNotExistException ex)
                 {
-                    // To do: error messageBox displayer
+                    messageBoxDisplayer.ShowErrorBox("Worksheet not exist", ex.Message);
                 }
                 catch (ExcelFileNotExistsException ex)
                 {
-                    // To do: error messageBox displayer
+                    messageBoxDisplayer.ShowErrorBox("Excel file not exist", ex.Message);
                 }
 
 
@@ -301,19 +305,21 @@ namespace PhotoAdder.ViewModel.VMs
                     await AddImagesToExcel(excelFileData.RowsData, imageURLsToDownload);
                 }
 
-                System.Windows.Forms.MessageBox.Show("Done", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                messageBoxDisplayer.ShowInformationBox("Information","Done");
+
                 ButtonEnable = true;
                 ProgressBarVis = false;
 
             }
             else if (!isFolderSelected)
             {
-                System.Windows.Forms.MessageBox.Show("Folder not selected", "Please select location of image save folder!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                messageBoxDisplayer.ShowErrorBox("Folder not selected", "Please select location of image save folder!");
             }
             else if(!isExcelFileSelected) 
             {
-                System.Windows.Forms.MessageBox.Show("File not selected", "Please select location of Excel file!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                messageBoxDisplayer.ShowErrorBox("Folder not selected", "Please select location of Excel file!");
             }
+
             ProgressValue = 0;
         }
         #endregion
@@ -328,8 +334,28 @@ namespace PhotoAdder.ViewModel.VMs
             // Get URL for every cell phrase 
             foreach (RowData excelRow in excelFileData)
             {
-                string url = await googleAPIHelper.GetURLAsync(excelRow.RowPhrase);
-                imageURLs.Add(url);
+                try
+                {
+                    string url = await googleAPIHelper.GetURLAsync(excelRow.RowPhrase);
+                    imageURLs.Add(url);
+                }
+                catch(ApiKeyNotSetException ex)
+                {
+                    messageBoxDisplayer.ShowErrorBox("API key error", ex.Message);
+                }
+                catch (SearchEngineIdNotSetException ex)
+                {
+                    messageBoxDisplayer.ShowErrorBox("Search engine error", ex.Message);
+                }
+                catch (NullOrEmptySearchPhraseException ex)
+                {
+                    messageBoxDisplayer.ShowErrorBox("Search phrase error", ex.Message);
+                }
+                catch (UrlExtractionException ex)
+                {
+                    messageBoxDisplayer.ShowErrorBox("URL extraction error", ex.Message);
+                }
+
             }
 
             return imageURLs;
@@ -344,8 +370,21 @@ namespace PhotoAdder.ViewModel.VMs
             // Get URL for every cell phrase 
             foreach (RowData excelRow in excelFileData)
             {
-                string url = await webScraperHelper.GetImageURLAsync(excelRow.RowPhrase);
-                imageURLs.Add(url);
+                try
+                {
+                    string url = await webScraperHelper.GetImageURLAsync(excelRow.RowPhrase);
+                    imageURLs.Add(url);
+                }
+                catch (UrlExtractionException ex)
+                {
+                    messageBoxDisplayer.ShowErrorBox("URL extraction error", ex.Message);
+                }
+                catch (ImageForPhraseNotExistException ex)
+                {
+                    messageBoxDisplayer.ShowErrorBox("Phrase error", ex.Message);
+                }
+
+
             }
 
             return imageURLs;
@@ -365,14 +404,49 @@ namespace PhotoAdder.ViewModel.VMs
                 {
                     string savePath = AppData.OutputFolder + "\\CellPhotoToAdd.jpg";
 
-                    await imageDownloadHelper.DownloadImageAsync(imageUrl);
+                    try
+                    {
+                        await imageDownloadHelper.DownloadImageAsync(imageUrl);
+                    }
+                    catch (SaveFolderNotExistException ex)
+                    {
+                        messageBoxDisplayer.ShowErrorBox("Save folder error", ex.Message);
+                    }
+                    catch (NullOrEmptyImageUrlException ex)
+                    {
+                        messageBoxDisplayer.ShowErrorBox("URL error", ex.Message);
+                    }
+                    catch (ImageDownloadFailureException ex)
+                    {
+                        messageBoxDisplayer.ShowErrorBox("Image download error", ex.Message);
+                    }
 
                     ExcelImageAdderHelper excelImageAdderHelper = new ExcelImageAdderHelper
                     {
                         _ImageFilePath = savePath
                     };
 
-                    excelImageAdderHelper.AddImageToExcelFile(workSheet, rowCounter, ImageCell);
+                    try
+                    {
+                        excelImageAdderHelper.AddImageToExcelFile(workSheet, rowCounter, ImageCell);
+                    }
+                    catch (InvalidFileExtensionException ex)
+                    {
+                        messageBoxDisplayer.ShowErrorBox("File type error", ex.Message);
+                    }
+                    catch (ExcelFileNotExistsException ex)
+                    {
+                        messageBoxDisplayer.ShowErrorBox("Excel file error", ex.Message);
+                    }
+                    catch (ExcelWorksheetNotExistException ex)
+                    {
+                        messageBoxDisplayer.ShowErrorBox("Excel worksheet error", ex.Message);
+                    }
+                    catch (InvalidImageFilePathException ex)
+                    {
+                        messageBoxDisplayer.ShowErrorBox("Image path error", ex.Message);
+                    }
+                    
                     rowCounter++;
 
                     ProgressValue = rowCounter;
