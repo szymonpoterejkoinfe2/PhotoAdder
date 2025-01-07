@@ -1,14 +1,14 @@
-﻿//using DocumentFormat.OpenXml.Math;
-//using PhotoAdder.ViewModel.Helpers;
-//using PhotoAdder.ViewModel.Helpers.Exceptions;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using DocumentFormat.OpenXml.Math;
+using PhotoAdder.ViewModel.Helpers;
+using PhotoAdder.ViewModel.Helpers.Exceptions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-//namespace PhotoAdder.UnitTests
-//{
+namespace PhotoAdder
+{
 //    [TestClass]
 //    public class WebScraperHelperTests
 //    {
@@ -31,18 +31,16 @@
 //            var result = await webScraper.GetImageURLAsync(searchPhrase);
 
 //            Assert.IsTrue(!string.IsNullOrEmpty(result))
-//;       }
+//;
+//        }
 
 //        [TestMethod]
 //        public async Task GetImageURLAsync_SpacePhrase_ThrowsImageForPhraseNotExistException()
-//        { 
+//        {
 //            string searchPhrase = " ";
 //            var webScraper = new WebScraperHelper();
 //            await Assert.ThrowsExceptionAsync<ImageForPhraseNotExistException>(() => webScraper.GetImageURLAsync(searchPhrase));
-            
+
 //        }
-
-
-
-//    } 
-//}
+//    }
+}
