@@ -21,7 +21,7 @@ namespace PhotoAdder.ViewModel.Helpers
         private int endRow;
         private int phraseCellNumber;
 
-        public int PhraseCellNumber
+        public int PhraseColumnNumber
         {
             get { return phraseCellNumber; }
             set { phraseCellNumber = value; }

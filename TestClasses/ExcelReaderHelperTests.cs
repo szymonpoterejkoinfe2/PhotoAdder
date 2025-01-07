@@ -21,7 +21,7 @@ namespace PhotoAdder
     //                WorkSheetNumber = 1,
     //                StartRow = -1,
     //                EndRow = 1,
-    //                PhraseCellNumber = 1
+    //                PhraseColumnNumber = 1
     //            };
 
     //            bool limit = false;
@@ -41,7 +41,7 @@ namespace PhotoAdder
     //                WorkSheetNumber = -1, 
     //                StartRow = 1,
     //                EndRow = 1,
-    //                PhraseCellNumber = 1
+    //                PhraseColumnNumber = 1
     //            };
 
     //            bool limit = false;
@@ -61,7 +61,7 @@ namespace PhotoAdder
     //                WorkSheetNumber = 1,
     //                StartRow = 1, 
     //                EndRow = 1,
-    //                PhraseCellNumber = -1
+    //                PhraseColumnNumber = -1
     //            };
 
     //            bool limit = false;
@@ -81,7 +81,7 @@ namespace PhotoAdder
     //                WorkSheetNumber = 1,
     //                StartRow = 1,
     //                EndRow = 1,
-    //                PhraseCellNumber = 1
+    //                PhraseColumnNumber = 1
     //            };
 
     //            bool limit = false;
@@ -101,7 +101,7 @@ namespace PhotoAdder
     //                WorkSheetNumber = 100,
     //                StartRow = 1,
     //                EndRow = 1,
-    //                PhraseCellNumber = 1
+    //                PhraseColumnNumber = 1
     //            };
 
     //            bool limit = false;
@@ -121,7 +121,7 @@ namespace PhotoAdder
     //                WorkSheetNumber = 1,
     //                StartRow = 1,
     //                EndRow = 1,
-    //                PhraseCellNumber = 1
+    //                PhraseColumnNumber = 1
     //            };
     //            bool limit = false;
 
@@ -143,7 +143,7 @@ namespace PhotoAdder
     //                WorkSheetNumber = 1,
     //                StartRow = 2,
     //                EndRow = 1,
-    //                PhraseCellNumber = 1
+    //                PhraseColumnNumber = 1
     //            };
     //            bool limit = false;
 
@@ -171,7 +171,7 @@ namespace PhotoAdder
     //                WorkSheetNumber = -1,
     //                StartRow = -1,
     //                EndRow = 1,
-    //                PhraseCellNumber = 1
+    //                PhraseColumnNumber = 1
     //            };
 
     //            bool limit = true;
@@ -191,7 +191,7 @@ namespace PhotoAdder
     //                WorkSheetNumber = -1,
     //                StartRow = 1,
     //                EndRow = 1,
-    //                PhraseCellNumber = 1
+    //                PhraseColumnNumber = 1
     //            };
 
     //            bool limit = true;
@@ -211,7 +211,7 @@ namespace PhotoAdder
     //                WorkSheetNumber = 1,
     //                StartRow = 1,
     //                EndRow = 1,
-    //                PhraseCellNumber = -1
+    //                PhraseColumnNumber = -1
     //            };
 
     //            bool limit = true;
@@ -231,7 +231,7 @@ namespace PhotoAdder
     //                WorkSheetNumber = 1,
     //                StartRow = 1,
     //                EndRow = -1,
-    //                PhraseCellNumber = 1
+    //                PhraseColumnNumber = 1
     //            };
 
     //            bool limit = true;
@@ -251,7 +251,7 @@ namespace PhotoAdder
     //                WorkSheetNumber = 1,
     //                StartRow = 1,
     //                EndRow = 1,
-    //                PhraseCellNumber = 1
+    //                PhraseColumnNumber = 1
     //            };
 
     //            bool limit = true;
@@ -271,7 +271,7 @@ namespace PhotoAdder
     //                WorkSheetNumber = 100,
     //                StartRow = 1,
     //                EndRow = 1,
-    //                PhraseCellNumber = 1
+    //                PhraseColumnNumber = 1
     //            };
 
     //            bool limit = true;
@@ -291,7 +291,7 @@ namespace PhotoAdder
     //                WorkSheetNumber = 1,
     //                StartRow = 1,
     //                EndRow = 1,
-    //                PhraseCellNumber = 1
+    //                PhraseColumnNumber = 1
     //            };
     //            bool limit = true;
 
@@ -313,7 +313,7 @@ namespace PhotoAdder
     //                WorkSheetNumber = 1,
     //                StartRow = 2,
     //                EndRow = 1,
-    //                PhraseCellNumber = 1
+    //                PhraseColumnNumber = 1
     //            };
     //            bool limit = true;
 
