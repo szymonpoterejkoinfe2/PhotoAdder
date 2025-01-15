@@ -31,7 +31,7 @@ This tool simplifies the process of automating image insertion into Excel files 
 
 
 ## Tech stack
-**Tech:** WPF, C# .NET 6, HTTP Requests, Google Search API, Google Programmable Search Engine, JSON, Unit Testing
+**Tech:** WPF, C# .NET 6, HTTP Requests, Google Search API, Google Programmable Search Engine, JSON, Web scraping Unit Testing
 
 **Packages:** CloedXML, Newtonsoft.Json, HtmlAgilityPack
 
