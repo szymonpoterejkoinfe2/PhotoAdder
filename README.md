@@ -31,9 +31,9 @@ This tool simplifies the process of automating image insertion into Excel files 
 
 
 ## Tech stack
-**Tech:** WPF, C# .NET 6, HTTP Requests, Google Search API, Google Programmable Search Engine, JSON, UnitT esting
+**Tech:** WPF, C# .NET 6, HTTP Requests, Google Search API, Google Programmable Search Engine, JSON, Unit Testing
 
-**Packages:** CloedXML, Newtonsoft.Json
+**Packages:** CloedXML, Newtonsoft.Json, HtmlAgilityPack
 
 ## Application looks
 ![PhotoAdderLooks](https://github.com/user-attachments/assets/bac38d97-73ef-4310-a92c-0afb2b982031)
@@ -67,14 +67,17 @@ Set the following details to extract phrases and save images in the Excel file:
 - **Image Column**: Specify the column number where the images will be inserted.
 - **Starting Row**: Enter the row number from which phrase extraction and image insertion will begin.
 
-## 4. Optional: Limit Request to Free Version
+**4. Select Image Extraction Method**  
+Specify whether you want to extract image links using the API extractor or the web scraper.  
+
+## 5. Optional: Limit Request to Free Version
 - If this option is enabled, you can set the last row to be evaluated by the program.
 - If disabled, the program will extract every occupied row from the Excel file.
 
-## 5. Execute the Program
+## 6. Execute the Program
 Once all the settings are configured, press the **"Execute"** button to start the process.
 
-## 6. Completion
+## 7. Completion
 When the program successfully completes all operations, a message box will appear to inform you that the Excel file with images is ready.
 
 
